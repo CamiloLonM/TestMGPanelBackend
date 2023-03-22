@@ -1,12 +1,17 @@
 import express from 'express';
-//import dbConnection from './database/config.js';
+import dbConnection from './database/config.js';
 
 class Server {
   constructor() {
     this.app = express();
     this.port = process.env.PORT;
+    this.connectDB();
     this.middlewares();
     this.routes();
+  }
+
+  async connectDB() {
+    await dbConnection();
   }
 
   middlewares() {
@@ -16,7 +21,7 @@ class Server {
 
   routes() {
     this.app.get('/api', (req, res) => {
-      res.send('Hola');
+      res.send('hola soy camilo ');
     });
   }
 
