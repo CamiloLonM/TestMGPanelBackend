@@ -8,6 +8,7 @@ const UserSchema = Schema({
   email: {
     type: String,
     require: [true, 'Email is required'],
+    unique: true,
   },
   password: {
     type: String,
@@ -18,10 +19,16 @@ const UserSchema = Schema({
     require: true,
     enum: ['ADMIN_ROLE', 'USER_ROLE'],
   },
-  Status: {
+  status: {
     type: Boolean,
     default: true,
   },
 });
+
+UserSchema.methods.toJSON = function () {
+  const { _v, password, _id, ...user } = this.toObject();
+  user.uid = _id;
+  return user;
+};
 
 export default model('User', UserSchema);
