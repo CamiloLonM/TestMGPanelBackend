@@ -1,5 +1,6 @@
 import express from 'express';
 import dbConnection from './database/config.js';
+import routeUser from './routes/users.js';
 
 class Server {
   constructor() {
@@ -20,9 +21,7 @@ class Server {
   }
 
   routes() {
-    this.app.get('/api', (req, res) => {
-      res.send('hola soy camilo ');
-    });
+    this.app.use('/users', routeUser);
   }
 
   listen() {
