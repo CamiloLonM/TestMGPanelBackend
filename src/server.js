@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import dbConnection from './database/config.js';
 import routeUser from './routes/users.js';
 
@@ -16,6 +17,7 @@ class Server {
   }
 
   middlewares() {
+    this.app.use(cors());
     this.app.use(express.json());
     this.app.use(express.static('src/public'));
   }
