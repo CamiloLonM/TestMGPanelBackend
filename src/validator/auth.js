@@ -1,12 +1,12 @@
-import { check } from 'express-validator';
 import validateResult from '../middlewares/validateFields.js';
+import { password, email } from '../validator/fields.js';
 
-const validateLogin = [
-  check('email', 'Email is required').isEmail(),
-  check('password', 'Password is required').not().isEmpty(),
+const validateBodyLogin = [
+  password,
+  email,
   (req, res, next) => {
     validateResult(req, res, next);
   },
 ];
 
-export default validateLogin;
+export { validateBodyLogin };
