@@ -1,6 +1,6 @@
 import { check } from 'express-validator';
 import emailExists from '../helpers/emailExists.js';
-import isValidRole from '../helpers/validatorRole.js';
+import { existsUserId, isValidRole } from '../helpers/db-validator.js';
 import validateResult from '../middlewares/validateFields.js';
 
 const validateCreate = [
@@ -15,4 +15,19 @@ const validateCreate = [
   },
 ];
 
-export default validateCreate;
+const validateModify = [
+  check('id', 'not a MongoId').isMongoId(),
+  //check('id').custom(existsUserId),
+  (req, res, next) => {
+    validateResult(req, res, next);
+  },
+];
+
+const validateDelete = [
+  check('id', 'not a MongoId').isMongoId(),
+  //check('id').custom(existsUserId),
+  (req, res, next) => {
+    validateResult(req, res, next);
+  },
+];
+export { validateCreate, validateModify, validateDelete };
