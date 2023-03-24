@@ -1,4 +1,5 @@
 import Router from 'express';
+import { isAdmi, validateJwt } from '../middlewares/index.js';
 import {
   validateModify,
   validateCreate,
@@ -14,10 +15,17 @@ import {
 
 const router = Router();
 
-router.get('/', userGet);
-router.get('/:id', userGetId);
-router.post('/', validateCreate, userPost);
-router.put('/:id', validateModify, validateCreate, userPut);
-router.delete('/:id', validateDelete, userDelete);
+router.get('/', validateJwt, isAdmi, userGet);
+router.get('/:id', validateJwt, isAdmi, userGetId);
+router.post('/', validateJwt, isAdmi, validateCreate, userPost);
+router.put(
+  '/:id',
+  validateJwt,
+  isAdmi,
+  validateModify,
+  validateCreate,
+  userPut
+);
+router.delete('/:id', validateJwt, isAdmi, validateDelete, userDelete);
 
 export default router;
