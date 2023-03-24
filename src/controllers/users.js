@@ -3,7 +3,7 @@ import User from '../models/user.js';
 
 const userGetId = async (req, res) => {
   const { id } = req.params;
-  const userId = await User.findById(id).populate('user', 'name');
+  const userId = await User.findById(id);
   res.json({
     userId,
   });
@@ -32,7 +32,8 @@ const userPost = async (req, res) => {
 
 const userPut = async (req, res) => {
   const { id } = req.params;
-  const { _id, email, ...rest } = req.body;
+  const { _id, password, email, ...rest } = req.body;
+  rest.password = encryptPassword(password);
   const userDB = await User.findByIdAndUpdate(id, rest);
   res.json({
     userDB,
