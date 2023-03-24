@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import User from '../models/user.js';
+import Subscriber from '../models/suscriber.js';
 
 const validateJwt = async (req, res, next) => {
   const token = req.header('Authorization');
@@ -10,16 +10,16 @@ const validateJwt = async (req, res, next) => {
   }
   try {
     const { uid } = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
-    const user = await User.findById(uid);
-    if (!user) {
+    const subscriber = await Subscriber.findById(uid);
+    if (!subscriber) {
       return res.status(401).json({
-        msg: 'User does not exist on DB',
+        msg: 'Subscriber does not exist on DB',
       });
     }
-    if (!user.status) {
-      return res.status(401).json({ msg: 'User with false status' });
+    if (!subscriber.status) {
+      return res.status(401).json({ msg: 'Subscriber with false status' });
     }
-    req.user = user;
+    req.subscriber = subscriber;
     next();
   } catch (error) {
     res.status(401).json({
