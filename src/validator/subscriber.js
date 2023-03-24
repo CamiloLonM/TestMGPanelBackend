@@ -1,18 +1,23 @@
-import { check } from 'express-validator';
-import { emailSubscribers } from '../helpers/emailExists.js';
 import { validateResult } from '../middlewares/index.js';
+import { ROLES } from '../models/suscriber.js';
+import { name, email, password } from '../validator/fields.js';
 
-const validateSubscriber = [
-  check('name', 'Name is required ').exists().not().isEmpty(),
-  check('email', 'Email is required')
-    .custom(emailSubscribers)
-    .exists()
-    .isEmail(),
-  check('password', 'Password is required and more Six characters').isLength({
-    min: 6,
-  }),
+const validatePublicSubscriber = [
+  name,
+  email,
   (req, res, next) => {
+    req.body.role = ROLES[1];
     validateResult(req, res, next);
   },
 ];
-export default validateSubscriber;
+
+const validatePrivateBodySubscriber = [
+  name,
+  password,
+  email,
+  (req, res, next) => {
+    req.body.role = ROLES[0];
+    validateResult(req, res, next);
+  },
+];
+export { validatePublicSubscriber, validatePrivateBodySubscriber };
