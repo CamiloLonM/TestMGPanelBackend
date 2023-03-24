@@ -1,28 +1,23 @@
 import bcrypt from 'bcrypt';
-import User from '../models/user.js';
+import Subscribers from '../models/suscriber.js';
 import generateJwt from '../helpers/jwt.js';
 
 const signIn = async (req, res) => {
   const { email, password } = req.body;
   try {
-    const user = await User.findOne({ email });
-    if (!user) {
+    const subscriber = await Subscribers.findOne({ email, status: true });
+    if (!subscriber) {
       return res.status(400).json({
-        msg: 'Incorrect email',
+        msg: 'Email or password incorrect',
       });
     }
-    if (!user.status) {
-      return res.status(400).json({
-        msg: 'Inactive user',
-      });
-    }
-    const validPassword = bcrypt.compareSync(password, user.password);
+    const validPassword = bcrypt.compareSync(password, subscriber.password);
     if (!validPassword) {
-      return res.status(400).json({ msg: 'Incorrect password' });
+      return res.status(400).json({ msg: 'Email or password incorrect' });
     }
-    const token = await generateJwt(user.id);
-    res.json({
-      user,
+    const token = await generateJwt(subscriber.id);
+    return res.json({
+      subscriber,
       token,
     });
   } catch (error) {
@@ -30,6 +25,4 @@ const signIn = async (req, res) => {
   }
 };
 
-const signUp = () => {};
-
-export { signUp, signIn };
+export { signIn };

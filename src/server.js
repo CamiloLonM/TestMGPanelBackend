@@ -1,9 +1,10 @@
 import express from 'express';
 import cors from 'cors';
 import dbConnection from './database/config.js';
-import routeUser from './routes/users.js';
-import routeAuth from './routes/auth.js';
-import routeSubscriber from './routes/subscribers.js';
+import routeSubscriber from './routes/private.js';
+import routePublic from './routes/public.js';
+import isAdmi from './middlewares/validateRole.js';
+import validateJwt from './middlewares/validateJwt.js';
 
 class Server {
   constructor() {
@@ -12,6 +13,9 @@ class Server {
     this.connectDB();
     this.middlewares();
     this.routes();
+  }
+  getApp() {
+    return this.app;
   }
 
   async connectDB() {
@@ -25,9 +29,9 @@ class Server {
   }
 
   routes() {
-    this.app.use('/auth', routeAuth);
-    this.app.use('/users', routeUser);
-    this.app.use('/users', routeSubscriber);
+    this.app.use('/public', routePublic);
+    this.app.use(validateJwt, isAdmi);
+    this.app.use('/subscribers', routeSubscriber);
   }
 
   listen() {

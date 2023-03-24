@@ -1,8 +1,12 @@
 import { Schema, model } from 'mongoose';
 
+export const ROLES = ['ADMIN', 'SUBSCRIPTED'];
+
 const SubscriberSchema = Schema({
   name: {
     type: String,
+    min: [5],
+    max: [100],
     required: [true, 'Name is required'],
   },
   email: {
@@ -12,7 +16,14 @@ const SubscriberSchema = Schema({
   },
   password: {
     type: String,
+    min: [6],
+    max: [50],
     require: [true, 'Password is required'],
+  },
+  role: {
+    type: String,
+    require: true,
+    enum: ROLES,
   },
   status: {
     type: Boolean,
