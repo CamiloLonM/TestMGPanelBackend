@@ -1,7 +1,5 @@
 import Router from 'express';
-
-const router = Router();
-
+import validateCreate from '../validator/user.js';
 import {
   userGet,
   userGetId,
@@ -10,9 +8,11 @@ import {
   userDelete,
 } from '../controllers/users.js';
 
+const router = Router();
+
 router.get('/', userGet);
 router.get('/id', userGetId);
-router.post('/', userPost);
+router.post('/', validateCreate, userPost);
 router.put('/id', userPut);
 router.delete('/id', userDelete);
 

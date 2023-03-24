@@ -25,6 +25,12 @@ const userGet = async (req, res) => {
 const userPost = async (req, res) => {
   const { name, email, password, rol } = req.body;
   const user = new User({ name, email, password, rol });
+  const existsEmail = await User.findOne({ email });
+  if (existsEmail) {
+    return res.status(400).json({
+      msg: `This Email ${email} is already registered`,
+    });
+  }
   user.password = encryptPassword(password);
   await user.save();
   res.status(201).json(user);
