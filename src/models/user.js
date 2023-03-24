@@ -14,7 +14,7 @@ const UserSchema = Schema({
     type: String,
     require: [true, 'Password is required'],
   },
-  rol: {
+  role: {
     type: String,
     require: true,
     enum: ['ADMIN_ROLE', 'SUBSCRIBERS_ROLE'],
