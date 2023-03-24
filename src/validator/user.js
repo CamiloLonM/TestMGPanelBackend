@@ -1,7 +1,7 @@
 import { check } from 'express-validator';
-import emailExists from '../helpers/emailExists.js';
+import { emailExists } from '../helpers/emailExists.js';
 import { existsUserId, isValidRole } from '../helpers/db-validator.js';
-import validateResult from '../middlewares/validateFields.js';
+import { validateResult } from '../middlewares/index.js';
 
 const validateCreate = [
   check('name', 'Name is required ').exists().not().isEmpty(),
