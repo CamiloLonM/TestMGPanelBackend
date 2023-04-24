@@ -4,6 +4,9 @@ Logistics website that will be under construction.
 
 Application that allows management with administrative view for consultation, editing and deletion of permissions + public view for user subscription.
 
+# Website
+https://testmgpanelbackend181.mgpanel.org/
+
 Technologies:
 ---
 - HTML
@@ -11,6 +14,7 @@ Technologies:
 - ExpressJs
 - MongoDB
 - Mongoose (ODM)
+- MGPanel
 
 ---
 ## Envinroment setup
