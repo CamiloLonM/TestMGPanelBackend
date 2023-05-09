@@ -1,4 +1,4 @@
-# TestMGPanelBackend
+# Challenge-MGPanelBackend
 
 Logistics website that will be under construction.
 
@@ -9,14 +9,11 @@ https://testmgpanelbackend181.mgpanel.org/
 
 Technologies:
 ---
-- HTML
+- Frontend (MGPanel)
 - NodeJs
-- ExpressJs
-- MongoDB
-- Mongoose (ODM)
-- MGPanel
-
+- Database (MongoDB)
 ---
+
 ## Envinroment setup
 
 1. Create database
